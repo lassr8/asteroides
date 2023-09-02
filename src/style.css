@@ -8,7 +8,8 @@ body, html{
 }
 
 #app {
-	animation: bg-colores 10s infinite;
+	/* animation: bg-colores 10s infinite; */
+	background-color: #111;
 	width: 100%;
 	height: 100%;
 
