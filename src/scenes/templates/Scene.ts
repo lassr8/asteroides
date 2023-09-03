@@ -1,5 +1,5 @@
 export default class Scene extends Phaser.Scene {
-    constructor(config: {}) {
+    constructor(config: Phaser.Types.Scenes.SettingsConfig) {
         super(config);
     }
 

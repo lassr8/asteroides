@@ -24,7 +24,7 @@ export default class Nave extends SpriteObject {
 
 		this.body.world.on('worldbounds', (body: Phaser.Physics.Arcade.Body) => {
 			if (body.gameObject == this) {
-				
+				this.muerto()
 			}
 		})
 
@@ -35,11 +35,9 @@ export default class Nave extends SpriteObject {
 			right: this.scene.input.keyboard!.addKey(RIGHT),
 			space: this.scene.input.keyboard!.addKey(SPACE)
 		}
-
 	}
 	declare body: Phaser.Physics.Arcade.Body;
 	declare scene: GameScene;
-
 
 	key: {
 		up: Phaser.Input.Keyboard.Key,
@@ -87,7 +85,19 @@ export default class Nave extends SpriteObject {
 		/* T*T piu, piupiu */
 	}
 
-	onCollide() {
+	vidas = 3;
 
+	muerto() {
+		if (this.vidas >= 0) {
+			this.setVisible(false);
+			this.setActive(false);
+			console.log(this.vidas--);
+			this.setPosition(0, 0);
+			this.setActive(true);
+			this.setVisible(true);
+		} else {
+			this.scene.perder();
+			this.destroy();
+		}
 	}
 }

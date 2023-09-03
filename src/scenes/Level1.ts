@@ -1,6 +1,10 @@
 import GameScene from "./templates/GameScene";
 
 export default class Level1 extends GameScene {
+	constructor() {
+		super({ key: 'LEVEL-1' })
+	}
+
 	preload(): void {
 		super.preload();
 

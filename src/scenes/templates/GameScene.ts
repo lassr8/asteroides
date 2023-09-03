@@ -2,9 +2,6 @@ import Nave from '../../GameObjects/Nave';
 import Scene from './Scene';
 
 export default class GameScene extends Scene {
-    constructor(config: {}) {
-        super(config);
-    }
 
     preload(): void {
 
@@ -26,5 +23,9 @@ export default class GameScene extends Scene {
 
     update(time: number, delta: number): void {
         
+    }
+
+    perder () {
+        this.scene.stop().start('LOST');
     }
 }
