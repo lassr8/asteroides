@@ -6,16 +6,7 @@ export default class GameScene extends Scene {
         super(config);
     }
 
-    bordes = {
-        width: 0,
-        height: 0
-    }
-
     preload(): void {
-        this.bordes = {
-            width: this.game.canvas.width,
-            height: this.game.canvas.height
-        }
 
         Nave.preload(this);
         

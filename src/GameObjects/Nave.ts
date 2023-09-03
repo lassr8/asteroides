@@ -1,4 +1,5 @@
 import SHIP_C0 from '../img/characters/ship-c0.png';
+import GameScene from '../scenes/templates/GameScene';
 import SpriteObject from './SpriteObject';
 
 const { UP, DOWN, LEFT, RIGHT, SPACE } = Phaser.Input.Keyboard.KeyCodes;
@@ -10,7 +11,7 @@ export default class Nave extends SpriteObject {
 		scene.load.image('nave', SHIP_C0);
 	}
 
-	constructor(scene: Phaser.Scene, x: number, y: number) {
+	constructor(scene: GameScene, x: number, y: number) {
 		super(scene, x, y, 'nave');
 		
 		scene.physics.add.existing(this);
@@ -19,16 +20,33 @@ export default class Nave extends SpriteObject {
 
 		this.body.setMaxVelocity(400, 400);
 
+		this.body.setCollideWorldBounds(true);
+
+		this.body.world.on('worldbounds', (body: Phaser.Physics.Arcade.Body) => {
+			if (body.gameObject == this) {
+				
+			}
+		})
+
+		this.key = {
+			up: this.scene.input.keyboard!.addKey(UP),
+			down: this.scene.input.keyboard!.addKey(DOWN),
+			left: this.scene.input.keyboard!.addKey(LEFT),
+			right: this.scene.input.keyboard!.addKey(RIGHT),
+			space: this.scene.input.keyboard!.addKey(SPACE)
+		}
+
 	}
-
 	declare body: Phaser.Physics.Arcade.Body;
+	declare scene: GameScene;
 
-	key = {
-		up: this.scene.input.keyboard!.addKey(UP),
-		down: this.scene.input.keyboard!.addKey(DOWN),
-		left: this.scene.input.keyboard!.addKey(LEFT),
-		right: this.scene.input.keyboard!.addKey(RIGHT),
-		space: this.scene.input.keyboard!.addKey(SPACE)
+
+	key: {
+		up: Phaser.Input.Keyboard.Key,
+		down: Phaser.Input.Keyboard.Key,
+		left: Phaser.Input.Keyboard.Key,
+		right: Phaser.Input.Keyboard.Key,
+		space: Phaser.Input.Keyboard.Key,
 	}
 
 	protected preUpdate(time: number, delta: number): void {
@@ -44,9 +62,7 @@ export default class Nave extends SpriteObject {
 		if (this.key.right.isDown) {
 			this.angle += this.velocidadAngular;
 		}
-		if (this.key.space.isDown) { }
-
-		console.log(this.body.velocity)
+		if (this.key.space.isDown) { /* T*T */ }
 
 		super.preUpdate(time, delta);
 
@@ -69,5 +85,9 @@ export default class Nave extends SpriteObject {
 	/* ACCIONES */
 	disparar() {
 		/* T*T piu, piupiu */
+	}
+
+	onCollide() {
+
 	}
 }
