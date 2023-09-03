@@ -6,7 +6,14 @@
 	left: 0;
 }
 
-
+@keyframes start {
+	from {
+		background-color: white;
+	}
+	to {
+		background-color: inherit;
+	}
+}
 
 
 @keyframes bg-colores {
