@@ -1,4 +1,4 @@
-import SHIP_C0 from '../img/characters/ship-c0.png';
+import SHIP_C0 from '../assets/images/characters/ship-c0.png';
 import GameScene from '../scenes/templates/GameScene';
 import SpriteObject from './SpriteObject';
 
@@ -16,13 +16,17 @@ export default class Nave extends SpriteObject {
 		
 		scene.physics.add.existing(this);
 
-		this.setScale(70 / 100);
+		this.setScale(0.5);
 
-		this.body.setMaxVelocity(400, 400);
+		let vel = 300;
+
+		this.body.setMaxVelocity(vel, vel);
 
 		this.body.setCollideWorldBounds(true);
+		this.body.onWorldBounds = true;
 
-		this.body.world.on('worldbounds', (body: Phaser.Physics.Arcade.Body) => {
+		this.body.world.on(Phaser.Physics.Arcade.Events.WORLD_BOUNDS, (body: Phaser.Physics.Arcade.Body) => {
+			console.log('collide')
 			if (body.gameObject == this) {
 				this.muerto()
 			}
@@ -68,7 +72,7 @@ export default class Nave extends SpriteObject {
 
 	/* MOVE */
 	aceleracion = 10; // Fuerza con la que avanza
-	velocidadAngular = 10; // Velocidad con la que gira
+	velocidadAngular = 5; // Velocidad con la que gira
 
 	adelantar() {
 		this.body.velocity.x += this.aceleracion * Math.sin(this.rotation);
@@ -88,11 +92,15 @@ export default class Nave extends SpriteObject {
 	vidas = 3;
 
 	muerto() {
-		if (this.vidas >= 0) {
+		if (this.vidas > 0) {
 			this.setVisible(false);
 			this.setActive(false);
-			console.log(this.vidas--);
+
+			this.vidas--;
+			// console.log(this.vidas)
 			this.setPosition(0, 0);
+			this.body.setVelocity(0);
+
 			this.setActive(true);
 			this.setVisible(true);
 		} else {
