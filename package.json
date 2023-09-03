@@ -1,6 +1,10 @@
 {
   "name": "asteroides",
   "private": true,
+  "author": {
+    "name": "lassr8",
+    "email": "lassr8@proton.me"
+  },
   "version": "0.0.0",
   "type": "module",
   "scripts": {
