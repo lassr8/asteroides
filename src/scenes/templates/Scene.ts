@@ -3,6 +3,8 @@ export default class Scene extends Phaser.Scene {
         super(config);
     }
 
+
+
     /**
      * Where you load all your assets
      */
@@ -22,5 +24,17 @@ export default class Scene extends Phaser.Scene {
     update(time: number, delta: number): void {
         throw new Error("You should override the update method");
     }
+
+
+
+    /* GameObjects */
+    get(name: string) {
+        let gO = this.children.getByName(name);
+        if (gO == null) {
+            throw new Error('No game object with name: ' + name);
+        }
+        return gO;
+    }
+
 
 }

@@ -12,7 +12,5 @@ export default class Level1 extends GameScene {
     update(time: number, delta: number): void {
         super.update(time, delta)
 
-        this.cameras.main.centerOn(0, 0);
-
     }
 }
