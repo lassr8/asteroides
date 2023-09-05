@@ -1,3 +1,4 @@
+import GameScene from "../scenes/templates/GameScene";
 
 
 export default class SpriteObject extends Phaser.GameObjects.Sprite {
@@ -7,10 +8,11 @@ export default class SpriteObject extends Phaser.GameObjects.Sprite {
      */
     static preload: (scene: Phaser.Scene) => void;
     
-    constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, frame?: string | number | undefined, add = true) {
+    constructor(scene: GameScene, x: number, y: number, texture: string | Phaser.Textures.Texture, frame?: string | number | undefined, add = true) {
         super(scene, x, y, texture, frame)
         if (add) {
             scene.add.existing(this);
         }
     }
+    declare scene: GameScene;
 }

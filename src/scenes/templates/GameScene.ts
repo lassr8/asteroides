@@ -1,12 +1,12 @@
+import Asteroide from '../../GameObjects/Asteroide';
 import Nave from '../../GameObjects/Nave';
 import Scene from './Scene';
 
 export default class GameScene extends Scene {
 
-    preload(): void {
-
+    async preload() {
         Nave.preload(this);
-        
+        await Asteroide.preload(this);
     }
 
     
@@ -15,7 +15,7 @@ export default class GameScene extends Scene {
         this.cameras.main.centerOn(0, 0);
 
         /* CREATING */
-        this.nave = new Nave(this, 0, 0)
+        this.nave = new Nave(this, 0, 0);
         
     }
 

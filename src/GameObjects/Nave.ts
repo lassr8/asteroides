@@ -1,11 +1,12 @@
 import SHIP_C0 from '../assets/images/characters/ship-c0.png';
+import delay from '../functions/delay';
 import GameScene from '../scenes/templates/GameScene';
-import SpriteObject from './SpriteObject';
+import DynamicSprite from './DynamicSprite';
 
 const { UP, DOWN, LEFT, RIGHT, SPACE } = Phaser.Input.Keyboard.KeyCodes;
 
 
-export default class Nave extends SpriteObject {
+export default class Nave extends DynamicSprite {
 
 	static preload(scene: Phaser.Scene) {
 		scene.load.image('nave', SHIP_C0);
@@ -13,8 +14,6 @@ export default class Nave extends SpriteObject {
 
 	constructor(scene: GameScene, x: number, y: number) {
 		super(scene, x, y, 'nave');
-		
-		scene.physics.add.existing(this);
 
 		this.setScale(0.5);
 
@@ -25,10 +24,9 @@ export default class Nave extends SpriteObject {
 		this.body.setCollideWorldBounds(true);
 		this.body.onWorldBounds = true;
 
-		this.body.world.on(Phaser.Physics.Arcade.Events.WORLD_BOUNDS, (body: Phaser.Physics.Arcade.Body) => {
-			console.log('collide')
+		this.body.world.on(Phaser.Physics.Arcade.Events.WORLD_BOUNDS, async (body: Phaser.Physics.Arcade.Body) => {
 			if (body.gameObject == this) {
-				this.muerto()
+				await this.muerto()
 			}
 		})
 
@@ -38,10 +36,11 @@ export default class Nave extends SpriteObject {
 			left: this.scene.input.keyboard!.addKey(LEFT),
 			right: this.scene.input.keyboard!.addKey(RIGHT),
 			space: this.scene.input.keyboard!.addKey(SPACE)
-		}
+		};
+
+		let {displayHeight: w, displayHeight: h} = this;
+		this.body.setCircle(h).setOffset(w/4, 0);
 	}
-	declare body: Phaser.Physics.Arcade.Body;
-	declare scene: GameScene;
 
 	key: {
 		up: Phaser.Input.Keyboard.Key,
@@ -91,21 +90,27 @@ export default class Nave extends SpriteObject {
 
 	vidas = 3;
 
-	muerto() {
+	async muerto() {
 		if (this.vidas > 0) {
 			this.setVisible(false);
+			this.scene.physics.pause();
 			this.setActive(false);
-
+			
 			this.vidas--;
-			// console.log(this.vidas)
+			
 			this.setPosition(0, 0);
 			this.body.setVelocity(0);
-
+			
+			await delay(this.deathDelay);
+			
 			this.setActive(true);
+			this.scene.physics.resume();
 			this.setVisible(true);
 		} else {
 			this.scene.perder();
 			this.destroy();
 		}
 	}
+
+	deathDelay = 3000;
 }
