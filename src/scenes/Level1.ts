@@ -17,17 +17,21 @@ export default class Level1 extends GameScene {
 			astersChildren[i] = new Asteroide(this, 0, 0);
 		}
 
-		let asters = this.add.group(astersChildren);
+		this.asters.addMultiple(astersChildren);
+
+		// console.log(this.asters)
 
 		Phaser.Actions.PlaceOnCircle(
-			asters.getChildren(),
+			this.asters.getChildren(),
 			new Phaser.Geom.Circle(0, 0, 300),
 		)
+
+		this.nave.estrellarseCon(this.asters, function(elt) {
+			this.muerto();
+		})
 		
 
 	}
-
-	aster!: Asteroide;
 
 
 	update(time: number, delta: number): void {

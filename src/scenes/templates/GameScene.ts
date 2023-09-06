@@ -20,10 +20,19 @@ export default class GameScene extends Scene {
 
         /* CREATING */
         this.nave = new Nave(this, 0, 0);
+        this.asters = <GroupOf<Asteroide>>this.add.group();
         
     }
 
+    /**
+     * La nave del juego
+     */
     nave!: Nave;
+
+    /**
+     * Todos los asteroides deberian guardarse aquí;
+     */
+    asters!: GroupOf<Asteroide>;
 
     update(time: number, delta: number): void {
         

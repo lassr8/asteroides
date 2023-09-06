@@ -39,8 +39,9 @@ export default class Nave extends DynamicSprite {
 			space: this.scene.input.keyboard!.addKey(SPACE)
 		};
 
-		let {displayHeight: w, displayHeight: h} = this;
-		this.body.setCircle(h).setOffset(w/4, 0);
+		let { displayHeight: w, displayHeight: h } = this;
+		this.body.setCircle(h).setOffset(w / 4, 0);
+		this.body.onOverlap = true;
 	}
 
 	key: {
@@ -97,14 +98,15 @@ export default class Nave extends DynamicSprite {
 			this.scene.physics.pause();
 			this.setActive(false);
 			new ExplosionNave(this.scene, this.x, this.y);
-			
+
 			this.vidas--;
-			
+
 			this.setPosition(0, 0);
 			this.body.setVelocity(0);
-			
+			this.setAngle(0);
+
 			await delay(this.deathDelay);
-			
+
 			this.setActive(true);
 			this.scene.physics.resume();
 			this.setVisible(true);
@@ -115,4 +117,20 @@ export default class Nave extends DynamicSprite {
 	}
 
 	deathDelay = 3000;
+
+	/**
+	 * Si deberia morir cuando toque un asteroide
+	 */
+	seEstrella = true;
+
+	estrellarseCon<T extends Phaser.GameObjects.GameObject>(gameObject: T | (Phaser.GameObjects.Group & {children:Phaser.Structs.Set<T>}), callback: (this: this, elt: T) => void) {
+		this.scene.physics.add.overlap(this, gameObject);
+		this.scene.physics.world.on('overlap', (gO1: this, gO2: T) => {
+			if (gO1 == this) {
+				if (this.seEstrella) {
+					callback.call(this, gO2 as T);
+				}
+			}
+		});
+	}
 }
