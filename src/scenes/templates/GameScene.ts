@@ -1,4 +1,5 @@
 import Asteroide from '../../GameObjects/Asteroide';
+import { ExplosionNave } from '../../GameObjects/Explosion';
 import Nave from '../../GameObjects/Nave';
 import Scene from './Scene';
 
@@ -7,6 +8,7 @@ export default class GameScene extends Scene {
     preload() {
         Nave.preload(this);
         Asteroide.preload(this);
+        ExplosionNave.preload(this);
     }
 
     

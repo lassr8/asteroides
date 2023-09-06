@@ -2,6 +2,7 @@ import SHIP_C0 from '../assets/images/characters/ship-c0.png';
 import delay from '../functions/delay';
 import GameScene from '../scenes/templates/GameScene';
 import DynamicSprite from './DynamicSprite';
+import { ExplosionNave } from './Explosion';
 
 const { UP, DOWN, LEFT, RIGHT, SPACE } = Phaser.Input.Keyboard.KeyCodes;
 
@@ -95,6 +96,7 @@ export default class Nave extends DynamicSprite {
 			this.setVisible(false);
 			this.scene.physics.pause();
 			this.setActive(false);
+			new ExplosionNave(this.scene, this.x, this.y);
 			
 			this.vidas--;
 			

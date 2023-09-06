@@ -8,7 +8,7 @@ export default class SpriteObject extends Phaser.GameObjects.Sprite {
      */
     static preload: (scene: Phaser.Scene) => void;
     
-    constructor(scene: GameScene, x: number, y: number, texture: string | Phaser.Textures.Texture, frame?: string | number | undefined, add = true) {
+    constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, frame?: string | number | undefined, add = true) {
         super(scene, x, y, texture, frame)
         if (add) {
             scene.add.existing(this);

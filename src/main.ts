@@ -21,6 +21,7 @@ export const gameConfig: Phaser.Types.Core.GameConfig = {
         debug: true
       }
     },
+    pixelArt: true,
   };
 
 new Phaser.Game(gameConfig);

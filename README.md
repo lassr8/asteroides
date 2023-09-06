@@ -9,3 +9,5 @@ lassr8 - Creador
 ## Agradecimientos
 
 - Nave: wubitog y Skorpio ( <http://opengameart.org/users/skorpio> ).
+
+- Laser sounds. dklon
