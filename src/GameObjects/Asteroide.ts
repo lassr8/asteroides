@@ -58,7 +58,7 @@ export default class Asteroide extends DynamicSprite {
 
 		this.body.angularVelocity = r(-50, 50);
 
-		console.log(this.body.angularVelocity)
+		// console.log(this.body.angularVelocity)
 
 
 
