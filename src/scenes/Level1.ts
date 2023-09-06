@@ -26,7 +26,7 @@ export default class Level1 extends GameScene {
 			new Phaser.Geom.Circle(0, 0, 300),
 		)
 
-		this.nave.estrellarseCon(this.asters, function(elt) {
+		this.nave.estrellarseCon(this.asters, function() {
 			this.muerto();
 		})
 		
