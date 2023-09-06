@@ -40,7 +40,7 @@ export default class Asteroide extends DynamicSprite {
         });
 	}
 
-	constructor(scene: GameScene, x: number, y: number, vel: { x: number, y: number } | Phaser.Math.Vector2) {
+	constructor(scene: GameScene, x: number, y: number, vel: { x: number, y: number } | Phaser.Math.Vector2 = {x:0,y:0}) {
 		super(scene, x, y, 'ASTER-0');
 
 		this.setScale(0.5);
