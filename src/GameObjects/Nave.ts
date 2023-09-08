@@ -13,8 +13,10 @@ export default class Nave extends DynamicSprite {
 		scene.load.image('nave', SHIP_C0);
 	}
 
-	constructor(scene: GameScene, x: number, y: number) {
+	constructor(scene: GameScene, x: number, y: number, cameraFollow = true) {
 		super(scene, x, y, 'nave');
+
+		this.inicio = new Phaser.Geom.Point(x, y);
 
 		this.setScale(0.5);
 
@@ -42,7 +44,16 @@ export default class Nave extends DynamicSprite {
 		let { displayHeight: w, displayHeight: h } = this;
 		this.body.setCircle(h).setOffset(w / 4, 0);
 		this.body.onOverlap = true;
+
+		if (cameraFollow) {
+			this.cameraFollow = this.scene.cameras.main;
+		} else {
+			this.cameraFollow = null;
+		}
+		
 	}
+
+	inicio: Phaser.Geom.Point;
 
 	key: {
 		up: Phaser.Input.Keyboard.Key,
@@ -52,20 +63,31 @@ export default class Nave extends DynamicSprite {
 		space: Phaser.Input.Keyboard.Key,
 	}
 
+	userControl = false;
+
 	protected preUpdate(time: number, delta: number): void {
-		if (this.key.up.isDown) {
-			this.adelantar();
+		if (this.userControl) {
+
+			if (this.key.up.isDown) {
+				this.adelantar();
+			}
+			if (this.key.down.isDown) {
+				this.atrasar();
+			}
+			if (this.key.left.isDown) {
+				this.angle -= this.velocidadAngular;
+			}
+			if (this.key.right.isDown) {
+				this.angle += this.velocidadAngular;
+			}
+			if (this.key.space.isDown) {
+				this.disparar();
+			}
 		}
-		if (this.key.down.isDown) {
-			this.atrasar();
+
+		if (this.cameraFollow) {
+			this.cameraFollow.centerOn(this.x, this.y);
 		}
-		if (this.key.left.isDown) {
-			this.angle -= this.velocidadAngular;
-		}
-		if (this.key.right.isDown) {
-			this.angle += this.velocidadAngular;
-		}
-		if (this.key.space.isDown) { /* T*T */ }
 
 		super.preUpdate(time, delta);
 
@@ -88,6 +110,7 @@ export default class Nave extends DynamicSprite {
 	/* ACCIONES */
 	disparar() {
 		/* T*T piu, piupiu */
+		console.log('piu piu')
 	}
 
 	vidas = 3;
@@ -101,7 +124,7 @@ export default class Nave extends DynamicSprite {
 
 			this.vidas--;
 
-			this.setPosition(0, 0);
+			this.setPosition(this.inicio.x, this.inicio.y);
 			this.body.setVelocity(0);
 			this.setAngle(0);
 
@@ -123,14 +146,26 @@ export default class Nave extends DynamicSprite {
 	 */
 	seEstrella = true;
 
-	estrellarseCon<T extends Phaser.GameObjects.GameObject>(gameObject: T | (Phaser.GameObjects.Group & {children:Phaser.Structs.Set<T>}), callback: (this: this, elt: T) => void) {
+	estrellarseCon<T extends Phaser.GameObjects.GameObject>(gameObject: T | (Phaser.GameObjects.Group & { children: Phaser.Structs.Set<T> })) {
+		this.addOverlap<T>(gameObject, function () {
+			this.muerto();
+		})
+	}
+
+	addOverlap<T extends Phaser.GameObjects.GameObject>(gameObject: T | (Phaser.GameObjects.Group & { children: Phaser.Structs.Set<T> }), callback: (this: this, elt: T) => void) {
 		this.scene.physics.add.overlap(this, gameObject);
 		this.scene.physics.world.on('overlap', (gO1: this, gO2: T) => {
-			if (gO1 == this) {
-				if (this.seEstrella) {
-					callback.call(this, gO2 as T);
+			if (this.seEstrella) {
+				if (gO1 == this) {
+					if (gO2 == gameObject) {
+						if (gO2 instanceof Phaser.GameObjects.Group) {
+							callback.call(this, gO2 as T);
+						}
+					}
 				}
 			}
 		});
 	}
+
+	cameraFollow: Phaser.Cameras.Scene2D.Camera | null;
 }

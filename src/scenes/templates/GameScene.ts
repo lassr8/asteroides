@@ -13,16 +13,48 @@ export default class GameScene extends Scene {
 
     
     create(): void {
-        /* SETUP */
-        this.cameras.main.centerOn(0, 0);
-
+        // SETUP
+        this.cameras.main.setLerp(0.1);
         Asteroide.animsLoad(this);
 
-        /* CREATING */
-        this.nave = new Nave(this, 0, 0);
-        this.asters = <GroupOf<Asteroide>>this.add.group();
+
+        // CREATING
+        // - bordes
+        this._bordes = this.add.rectangle().setStrokeStyle(2, 0xFFFFFF).setOrigin(0, 0);
+        this.bordes = new Phaser.Geom.Rectangle(0, 0, 2000, 2000);
+
+        // - nave
+        let {centerX: cX, centerY: cY} = this.bordes;
+        this.nave = new Nave(this, cX, cY);
         
+        // - asteroides
+        this.asters = <GroupOf<Asteroide>>this.add.group();
     }
+
+    get center(): Phaser.Geom.Point {
+        return this._bordes.getCenter();
+    }
+
+    _bordes!: Phaser.GameObjects.Rectangle;
+    set bordes(rect: Phaser.Geom.Rectangle) {
+        let {x, y, width, height} = rect;
+        
+        // world bounds
+        this.physics.world.setBounds(x, y, width, height);
+        
+        // drawing bounds
+        this._bordes.setPosition(x, y);
+        this._bordes.setSize(width, height);
+
+        // set camera limits
+        this.cameras.main.setBounds(x, y, width, height);
+    }
+
+    get bordes(): Phaser.Geom.Rectangle {
+        return this.physics.world.bounds;
+    }
+
+
 
     /**
      * La nave del juego
@@ -35,7 +67,7 @@ export default class GameScene extends Scene {
     asters!: GroupOf<Asteroide>;
 
     update(time: number, delta: number): void {
-        
+
     }
 
     perder () {
