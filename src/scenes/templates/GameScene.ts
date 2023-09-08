@@ -13,6 +13,7 @@ export default class GameScene extends Scene {
 
     
     create(): void {
+        super.create();
         // SETUP
         this.cameras.main.setLerp(0.01);
         Asteroide.animsLoad(this);
@@ -66,7 +67,7 @@ export default class GameScene extends Scene {
      */
     asters!: GroupOf<Asteroide>;
 
-    update(time: number, delta: number): void {
+    update(_time: number, _delta: number): void {
 
     }
 
