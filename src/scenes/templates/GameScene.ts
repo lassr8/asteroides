@@ -14,7 +14,7 @@ export default class GameScene extends Scene {
     
     create(): void {
         // SETUP
-        this.cameras.main.setLerp(0.1);
+        this.cameras.main.setLerp(0.01);
         Asteroide.animsLoad(this);
 
 

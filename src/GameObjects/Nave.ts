@@ -46,9 +46,10 @@ export default class Nave extends DynamicSprite {
 		this.body.onOverlap = true;
 
 		if (cameraFollow) {
-			this.cameraFollow = this.scene.cameras.main;
+			this._cameraFollow = this.scene.cameras.main;
+			this.cameraFollow = this._cameraFollow;
 		} else {
-			this.cameraFollow = null;
+			this._cameraFollow = null;
 		}
 		
 	}
@@ -85,10 +86,6 @@ export default class Nave extends DynamicSprite {
 			}
 		}
 
-		if (this.cameraFollow) {
-			this.cameraFollow.centerOn(this.x, this.y);
-		}
-
 		super.preUpdate(time, delta);
 
 	} // end preUpdate
@@ -118,6 +115,7 @@ export default class Nave extends DynamicSprite {
 	async muerto() {
 		if (this.vidas > 0) {
 			this.setVisible(false);
+			this._cameraFollow?.stopFollow();
 			this.scene.physics.pause();
 			this.setActive(false);
 			new ExplosionNave(this.scene, this.x, this.y);
@@ -133,6 +131,7 @@ export default class Nave extends DynamicSprite {
 			this.setActive(true);
 			this.scene.physics.resume();
 			this.setVisible(true);
+			this._cameraFollow?.startFollow(this);
 		} else {
 			this.scene.perder();
 			this.destroy();
@@ -167,5 +166,13 @@ export default class Nave extends DynamicSprite {
 		});
 	}
 
-	cameraFollow: Phaser.Cameras.Scene2D.Camera | null;
+	private _cameraFollow: Phaser.Cameras.Scene2D.Camera | null;
+	get cameraFollow(): Phaser.Cameras.Scene2D.Camera | null {
+		return this._cameraFollow;
+	}
+	set cameraFollow(cam: Phaser.Cameras.Scene2D.Camera | null) {
+		this._cameraFollow?.stopFollow();
+		cam?.startFollow(this);
+		this._cameraFollow = cam;
+	}
 }
