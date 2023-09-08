@@ -2,11 +2,14 @@ import * as Phaser from 'phaser';
 import './style.css'
 import scenes from './scenes';
 
+
 export const gameConfig: Phaser.Types.Core.GameConfig = {
     type: Phaser.AUTO,
     scale: {
-      width: innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
-      height: (innerHeight || document.documentElement.clientHeight || document.body.clientHeight) - 1
+      mode: Phaser.Scale.RESIZE,
+      parent: 'app',
+      width: '100%',
+      height: '100%'
     },
     scene: scenes,
     transparent: true,

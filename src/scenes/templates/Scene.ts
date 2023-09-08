@@ -17,6 +17,7 @@ export default class Scene extends Phaser.Scene {
      * Where you set up your scene
      */
     create(){
+        this.scale.on(Phaser.Scale.Events.RESIZE, this.resize)
 
     }
 
@@ -26,14 +27,15 @@ export default class Scene extends Phaser.Scene {
     }
 
 
+    
+    resize(gameSize: Phaser.Structs.Size, baseSize:Phaser.Structs.Size, displaySize:Phaser.Structs.Size, previousWidth: number, previousHeight: number)
+    {
+        const width = gameSize.width;
+        const height = gameSize.height;
 
-    /* GameObjects */
-    get(name: string) {
-        let gO = this.children.getByName(name);
-        if (gO == null) {
-            throw new Error('No game object with name: ' + name);
-        }
-        return gO;
+        this.cameras.resize(width, height);
+
+        console.log(gameSize, baseSize, displaySize, previousWidth,previousHeight);
     }
 
 
