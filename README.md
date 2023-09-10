@@ -11,3 +11,5 @@ lassr8 - Creador
 - Nave: wubitog y Skorpio ( <http://opengameart.org/users/skorpio> ).
 
 - Laser sounds. dklon
+
+- Image by FelixMittermeier from Pixabay
