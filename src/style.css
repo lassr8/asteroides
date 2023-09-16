@@ -13,6 +13,13 @@ html, body {
 	left: 0;
 }
 
+#config-div {
+	width: 50vw;
+	height: 50vh;
+	z-index: 10;
+	background-color: aqua;
+}
+
 @keyframes start {
 	from {
 		background-color: white;
