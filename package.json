@@ -17,6 +17,7 @@
     "vite": "^4.4.5"
   },
   "dependencies": {
+    "@rmwc/button": "^8.0.8",
     "@rmwc/radio": "^8.0.8",
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
