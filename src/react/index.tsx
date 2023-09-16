@@ -2,6 +2,10 @@ import React from "react";
 import { createRoot } from 'react-dom/client';
 import { Config } from "./config";
 
+// styles
+// - @rmwc
+import '@rmwc/radio/styles';
+
 function ReactApp() {
     return (<Config/>);
 }
