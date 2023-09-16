@@ -2,6 +2,10 @@ import { Radio } from "@rmwc/radio";
 import React, { useState } from "react";
 import config from "../functions/config";
 
+// styles
+import '@rmwc/radio/styles';
+import '@rmwc/button/styles';
+
 console.log(config.get('ALLOW_COOKIES'));
 
 function CookiesConfig(props: { allowCookies: boolean, setAllowCookies: React.Dispatch<React.SetStateAction<boolean>> }) {
