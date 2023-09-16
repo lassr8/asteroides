@@ -19,13 +19,24 @@ export function get(key: string) {
       		return c.substring(name.length, c.length);
     	}
 	}
-	return "";
+	return false;
 }
 
 export function remove(key: string) {
 	set(key, '', -1);
 }
 
-const cookies = {get,set,remove};
+export function deleteAll() {
+    const cookies = document.cookie.split(";");
+
+    for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i];
+        const eqPos = cookie.indexOf("=");
+        const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
+}
+
+const cookies = {get,set,remove,deleteAll};
 
 export default cookies;

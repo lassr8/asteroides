@@ -5,6 +5,10 @@ html, body {
 	padding: 0;
 }
 
+div {
+	box-sizing: border-box;
+}
+
 #app {
 	/* animation: bg-colores 10s infinite; */
 	background-color: #111;
@@ -43,6 +47,7 @@ html, body {
 	width: 100%;
 	padding: 1rem;
 	padding-top: 0;
+	line-break: strict;
 }
 
 
