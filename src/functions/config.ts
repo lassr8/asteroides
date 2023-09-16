@@ -4,7 +4,6 @@ let prefix = 'config.';
 let expDays = 30; // days
 
 let cacheConfig: { [c:string]: string|number|boolean } = {
-    ALLOW_COOKIES: false,
 };
 
 const config = {
