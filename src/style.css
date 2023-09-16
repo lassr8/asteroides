@@ -13,12 +13,39 @@ html, body {
 	left: 0;
 }
 
-#config-div {
-	width: 50vw;
-	height: 50vh;
+#react-app {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
 	z-index: 10;
-	background-color: aqua;
+	
+	/* center everything */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
 }
+
+.config {
+	min-width: 300px;
+	max-width: 500px;
+	width: 50vw;
+	background-color: #00ffffb9;
+	border-radius: 15px;
+	display: flex;
+	flex-direction: column;
+}
+
+.config>.block {
+	justify-self: stretch;
+	width: 100%;
+	padding: 1rem;
+	padding-top: 0;
+}
+
+
 
 @keyframes start {
 	from {

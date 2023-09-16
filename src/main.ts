@@ -1,7 +1,7 @@
 import * as Phaser from 'phaser';
 import './style.css'
 import scenes from './scenes';
-import root from './functions/config';
+import { loadReactApp } from './react';
 
 
 export const gameConfig: Phaser.Types.Core.GameConfig = {
@@ -31,4 +31,4 @@ export const gameConfig: Phaser.Types.Core.GameConfig = {
 
 new Phaser.Game(gameConfig);
 
-root;
+loadReactApp();
