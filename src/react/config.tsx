@@ -1,10 +1,12 @@
 import { Radio } from "@rmwc/radio";
+import { Button } from "@rmwc/button";
 import React, { useState } from "react";
 import config from "../functions/config";
 
 // styles
 import '@rmwc/radio/styles';
 import '@rmwc/button/styles';
+import cookies from "../functions/cookies";
 
 console.log(config.get('ALLOW_COOKIES'));
 
@@ -30,8 +32,13 @@ function CookiesConfig(props: { allowCookies: boolean, setAllowCookies: React.Di
                 </Radio>
             </div>
             
-            
-
+            <div>
+                <Button
+                    label="Delete cookies"
+                    raised
+                    onClick={() => cookies.deleteAll()}
+                />
+            </div>
         </div>
     )
 }
